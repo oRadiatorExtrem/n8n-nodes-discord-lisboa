@@ -1,0 +1,62 @@
+{
+  "name": "n8n-nodes-discord-lisboa",
+  "version": "1.0.0",
+  "description": "n8n community nodes for Discord — triggers, actions and interactive prompts via discord.js v14 and Discord API v10. No IPC, singleton WebSocket client, proper privileged intents.",
+  "keywords": [
+    "n8n",
+    "n8n-community-node-package",
+    "discord",
+    "discord-bot",
+    "trigger",
+    "webhook",
+    "automation"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "karluz"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=18.10"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "lint": "eslint nodes credentials --ext .ts",
+    "lintfix": "eslint nodes credentials --ext .ts --fix",
+    "prepublishOnly": "npm run build && npm run lint"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/DiscordBotApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/DiscordTrigger/DiscordTrigger.node.js",
+      "dist/nodes/DiscordAction/DiscordAction.node.js",
+      "dist/nodes/DiscordInteraction/DiscordInteraction.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "gulp": "^4.0.2",
+    "n8n-workflow": "^2.16.0",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.0"
+  }
+}
