@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build & type-check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # --ignore-scripts skips native addon builds (isolated-vm from n8n-workflow)
+      # We only need the TypeScript types, not the runtime binaries.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify dist output
+        run: |
+          test -f dist/credentials/DiscordBotApi.credentials.js
+          test -f dist/nodes/DiscordTrigger/DiscordTrigger.node.js
+          test -f dist/nodes/DiscordAction/DiscordAction.node.js
+          test -f dist/nodes/DiscordInteraction/DiscordInteraction.node.js
+          test -f dist/nodes/DiscordTrigger/discord-logo.svg
+          echo "All required dist files present."
+
+      - name: Security audit (discord.js only)
+        run: npm audit --omit=dev --audit-level=high || true

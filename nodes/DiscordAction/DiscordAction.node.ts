@@ -24,12 +24,13 @@ function makeRest(token: string): REST {
 
 export class DiscordAction implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Discord Action',
+		displayName: 'Discord Action (Lisboa)',
 		name: 'discordAction',
 		icon: 'file:discord-logo.svg',
 		group: ['output'],
 		version: 1,
 		description: 'Send messages, manage channels, and create events via Discord API v10',
+		subtitle: '={{$parameter["operation"]}}',
 		defaults: { name: 'Discord Action' },
 		inputs: ['main'],
 		outputs: ['main'],

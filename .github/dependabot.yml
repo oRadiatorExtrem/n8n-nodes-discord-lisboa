@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Watch discord.js for new releases — opens a PR automatically
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Lisbon"
+    allow:
+      - dependency-name: "discord.js"
+    labels:
+      - "discord-update"
+      - "dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    # Auto-assign to karluz for review
+    reviewers:
+      - "oRadiatorExtrem"

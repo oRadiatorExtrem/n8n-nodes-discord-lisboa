@@ -138,12 +138,13 @@ function serializeReaction(
 
 export class DiscordTrigger implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Discord Trigger',
+		displayName: 'Discord Trigger (Lisboa)',
 		name: 'discordTrigger',
 		icon: 'file:discord-logo.svg',
 		group: ['trigger'],
 		version: 1,
 		description: 'Triggers a workflow on Discord events via WebSocket (discord.js v14 / API v10)',
+		subtitle: '={{$parameter["triggerType"]}}',
 		defaults: { name: 'Discord Trigger' },
 		inputs: [],
 		outputs: ['main'],
