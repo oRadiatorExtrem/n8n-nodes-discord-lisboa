@@ -27,7 +27,7 @@ import {
 	REST,
 	Routes,
 } from 'discord.js';
-import type { TextBasedChannel } from 'discord.js';
+import type { TextBasedChannel, TextChannel, ButtonInteraction } from 'discord.js';
 import { getSharedClient, releaseSharedClient } from '../shared/clientSingleton';
 import { fetchGuilds, fetchTextChannels } from '../shared/discordRest';
 import type { DiscordCredentials } from '../shared/types';
@@ -269,19 +269,20 @@ export class DiscordInteraction implements INodeType {
 							throw new NodeOperationError(this.getNode(), `Cannot send to channel ${channelId}.`, { itemIndex: i });
 						}
 
-						const sentMessage = await (textChannel as { send: Function }).send({
+						const sendable = textChannel as TextChannel;
+						const sentMessage = await sendable.send({
 							content: messageContent,
 							components: [row],
 						});
 
 						// Wait for button click
-						let interaction = null;
+						let interaction: ButtonInteraction | null = null;
 						try {
 							interaction = await sentMessage.awaitMessageComponent({
 								componentType: ComponentType.Button,
 								time: timeoutSeconds * 1000,
 								filter: allowedUserId
-									? (intr: { user: { id: string } }) => intr.user.id === allowedUserId
+									? (intr) => intr.user.id === allowedUserId
 									: undefined,
 							});
 						} catch {
@@ -325,7 +326,7 @@ export class DiscordInteraction implements INodeType {
 							await sentMessage.edit({ components: [disabledRow] }).catch(() => null);
 
 							if (timeoutMessage) {
-								await (textChannel as { send: Function }).send({ content: timeoutMessage }).catch(() => null);
+								await sendable.send({ content: timeoutMessage }).catch(() => null);
 							}
 
 							timeoutItems.push({
