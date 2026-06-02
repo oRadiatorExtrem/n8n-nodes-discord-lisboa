@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-discord-lisboa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "n8n community nodes for Discord — triggers, actions and interactive prompts via discord.js v14 and Discord API v10. No IPC, singleton WebSocket client, proper privileged intents.",
   "keywords": [
     "n8n",
