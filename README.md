@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/n8n-nodes-discord-lisboa)](https://www.npmjs.com/package/n8n-nodes-discord-lisboa)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub](https://img.shields.io/badge/GitHub-oRadiatorExtrem-181717?logo=github)](https://github.com/oRadiatorExtrem/n8n-nodes-discord-lisboa)
 
 **n8n community nodes for Discord** — triggers, actions and interactive prompts built on [discord.js v14](https://discord.js.org/) and Discord API v10.
 
@@ -215,4 +216,4 @@ MIT — see [LICENSE](LICENSE)
 
 ---
 
-*Built by [karluz](https://github.com/karluz). Contributions welcome.*
+*Built by [karluz](https://github.com/oRadiatorExtrem). Contributions welcome via [GitHub Issues](https://github.com/oRadiatorExtrem/n8n-nodes-discord-lisboa/issues).*

@@ -17,7 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/oRadiatorExtrem/n8n-nodes-discord-lisboa.git"
+  },
+  "homepage": "https://github.com/oRadiatorExtrem/n8n-nodes-discord-lisboa#readme",
+  "bugs": {
+    "url": "https://github.com/oRadiatorExtrem/n8n-nodes-discord-lisboa/issues"
   },
   "engines": {
     "node": ">=18.10"
