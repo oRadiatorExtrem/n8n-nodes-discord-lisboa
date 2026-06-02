@@ -11,7 +11,6 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write  # Required for npm Trusted Publishing (OIDC)
 
     steps:
       - uses: actions/checkout@v4
@@ -19,9 +18,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
-          # No registry-url here — it creates an .npmrc with empty token
-          # that blocks OIDC auth. npm defaults to registry.npmjs.org anyway.
 
       - name: Install dependencies
         run: npm ci --ignore-scripts
@@ -29,10 +27,12 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish via Trusted Publishing (OIDC)
-        run: npm publish --access public --provenance
+      - name: Verify npm auth
+        run: npm whoami
         env:
-          # npm >= 9.5 uses these env vars to exchange the OIDC token
-          # for a temporary publish token when Trusted Publisher is configured
-          ACTIONS_ID_TOKEN_REQUEST_URL: ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL }}
-          ACTIONS_ID_TOKEN_REQUEST_TOKEN: ${{ env.ACTIONS_ID_TOKEN_REQUEST_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
