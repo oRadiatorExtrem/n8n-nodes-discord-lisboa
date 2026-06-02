@@ -1,6 +1,5 @@
 name: Publish to npm
 
-# Triggers when you create a GitHub Release (tag v1.0.1, v1.1.0, etc.)
 on:
   release:
     types: [published]
@@ -20,8 +19,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
+          # No registry-url here — it creates an .npmrc with empty token
+          # that blocks OIDC auth. npm defaults to registry.npmjs.org anyway.
 
       - name: Install dependencies
         run: npm ci --ignore-scripts
@@ -29,5 +29,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish (Trusted Publishing — no token required)
+      - name: Publish via Trusted Publishing (OIDC)
         run: npm publish --access public --provenance
+        env:
+          # npm >= 9.5 uses these env vars to exchange the OIDC token
+          # for a temporary publish token when Trusted Publisher is configured
+          ACTIONS_ID_TOKEN_REQUEST_URL: ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL }}
+          ACTIONS_ID_TOKEN_REQUEST_TOKEN: ${{ env.ACTIONS_ID_TOKEN_REQUEST_TOKEN }}
